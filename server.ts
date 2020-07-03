@@ -18,7 +18,7 @@ const app = express()
 // Apply Middlewares
 app.use(express.json())
 app.use(helmet())
-app.use(xss())
+// app.use(xss())
 
 const limiter = limit({
   windowMs: 10 * 60 * 1000, // 10 mins

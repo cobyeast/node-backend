@@ -1,17 +1,17 @@
 const express = require('express')
+
 const {
-  userGet,
-  userPut
+  usersGet,
+  usersPut
 } = require('../controllers/users')
 
 
 // Set Router
-const router = express.Router()
+const routers = express.Router()
 
-router
-  .route('/:id')
-  .get(userGet)
-  .post(userPut)
+routers.route('/:id')
+  .get(usersGet)
+  .put(usersPut)
 
-module.exports = router;
+module.exports = routers;
 export default express;

@@ -10,7 +10,7 @@ export const regAuth = asyncHandler(async(req:Request, res:Response, next:NextFu
     'msg': 'regAuth'
   })
 
-  return next()
+  next()
 
 })
 
@@ -21,6 +21,6 @@ export const logAuth = asyncHandler(async(req:Request, res:Response, next:NextFu
     'msg': 'logAuth'
   })
 
-  return next()
+  next()
 
 })

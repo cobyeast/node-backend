@@ -1,21 +1,21 @@
 const express = require('express')
 
 const {
-  authReg,
-  authLog
+  regAuth,
+  logAuth
 } = require('../controllers/auth')
 
 
-// Set Router
-const router = express.Router()
+// Set Routers
+const routers = express.Router()
 
-router
-  .route('/register')
-  .post(authReg)
-
-router
+routers
   .route('/login')
-  .post(authLog)
+  .post(logAuth)
 
-module.exports = router;
+routers
+  .route('/register')
+  .post(regAuth)
+
+module.exports = routers;
 export default express;

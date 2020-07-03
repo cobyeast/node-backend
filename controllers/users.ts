@@ -10,17 +10,17 @@ export const usersGet = asyncHandler(async(req:Request, res:Response, next:NextF
     'msg': 'usersGet'
   })
 
-  return next()
+  next()
 
 })
 
 export const usersPut = asyncHandler(async(req:Request, res:Response, next:NextFunction) => {
 
-  res.status(200).json({
+  res.status(201).json({
     'success': true,
     'msg': 'usersPut'
   })
 
-  return next()
+  next()
 
 })
