@@ -1,16 +1,19 @@
 const express = require('express')
-// const path = require('path')
-
-// Security Related
-const helmet = require('helmet')
-const xss = require('xss')
-const hpp = require('hpp')
-const limit = require('express-rate-limit');
+const path = require('path')
+const { execute } = require('./postgres/postgres')
 
 // Load env files
 require('dotenv').config()
 
-const PORT:string|number = process.env.PORT || 8000
+const PORT: string | number = process.env.PORT || 8000
+
+execute()
+
+// Security Related
+const helmet = require('helmet')
+// const xss = require('xss')
+const limit = require('express-rate-limit');
+const hpp = require('hpp')
 
 
 const app = express()
