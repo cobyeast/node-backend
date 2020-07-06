@@ -1,13 +1,23 @@
 const express = require('express')
 const path = require('path')
-const { execute } = require('./postgres/postgres')
+// const { client } = require('./postgres/postgres')
 
 // Load env files
 require('dotenv').config()
 
-const PORT: string | number = process.env.PORT || 8000
+const PORT: string | number = process.env.PORT || 8000;
 
-execute()
+// (async function(){
+//   try {
+//     await client.connect()
+//     console.log(`Successfully connected to ${process.env.PGDB}`)
+//   } catch (error) {
+//     console.log(error.message)
+//   } finally {
+//     await client.end()
+//     console.log(`Successfully closed connection with ${process.env.PGDB}`)
+//   }
+// })()
 
 // Security Related
 const helmet = require('helmet')

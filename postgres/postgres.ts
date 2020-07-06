@@ -13,7 +13,7 @@ interface postgres {
 }
 
 // Connect to Postgres
-const client:postgres = new Client({
+export const client:postgres = new Client({
   user: process.env.PGUSER,
   password: process.env.PGPASSWORD,
   host: process.env.PGHOST,
