@@ -1,23 +1,10 @@
 const express = require('express')
 const path = require('path')
-// const { client } = require('./postgres/postgres')
 
 // Load env files
 require('dotenv').config()
 
 const PORT: string | number = process.env.PORT || 8000;
-
-// (async function(){
-//   try {
-//     await client.connect()
-//     console.log(`Successfully connected to ${process.env.PGDB}`)
-//   } catch (error) {
-//     console.log(error.message)
-//   } finally {
-//     await client.end()
-//     console.log(`Successfully closed connection with ${process.env.PGDB}`)
-//   }
-// })()
 
 // Security Related
 const helmet = require('helmet')
@@ -30,6 +17,7 @@ const app = express()
 
 // Apply Middlewares
 app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 app.use(helmet())
 // app.use(xss())
 

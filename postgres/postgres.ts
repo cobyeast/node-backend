@@ -1,5 +1,3 @@
-const { Client } = require('pg')
-
 require('dotenv').config()
 
 interface postgres {
@@ -12,26 +10,38 @@ interface postgres {
   database: string,
 }
 
-// Connect to Postgres
-export const client:postgres = new Client({
-  user: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
-  host: process.env.PGHOST,
-  port: process.env.PGPORT,
-  database: process.env.PGDB
+export const knex:postgres = require('knex')({
+  client: 'pg',
+  connection: () => ({
+    host: process.env.PGHOST,
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    database: process.env.PGDB,
+    charset: 'utf8'
+  })
 })
 
-export async function execute() {
-  try {
-    await client.connect()
-    console.log(`Successfully connected to ${process.env.PGDB}`)
-  } catch (error) {
-    console.log(error.message)
-  } finally {
-    await client.end()
-    console.log(`Successfully closed connection with ${process.env.PGDB}`)
-  }
-}
+
+// Connect to Postgres
+// export const client:postgres = new Client({
+//   user: process.env.PGUSER,
+//   password: process.env.PGPASSWORD,
+//   host: process.env.PGHOST,
+//   port: process.env.PGPORT,
+//   database: process.env.PGDB
+// })
+
+// export async function execute() {
+//   try {
+//     await client.connect()
+//     console.log(`Successfully connected to ${process.env.PGDB}`)
+//   } catch (error) {
+//     console.log(error.message)
+//   } finally {
+//     await client.end()
+//     console.log(`Successfully closed connection with ${process.env.PGDB}`)
+//   }
+// }
 
 
 // Stackoverflow
@@ -61,3 +71,15 @@ export async function execute() {
 // }
 
 // const pool = new Pool({ Client: EnhancedClient });
+
+// (async function(){
+//   try {
+//     await client.connect()
+//     console.log(`Successfully connected to ${process.env.PGDB}`)
+//   } catch (error) {
+//     console.log(error.message)
+//   } finally {
+//     await client.end()
+//     console.log(`Successfully closed connection with ${process.env.PGDB}`)
+//   }
+// })()
