@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 
+const knex = require('../postgres/knex')
+
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -10,7 +12,19 @@ require('dotenv').config()
 
 export const regAuth = asyncHandler(async(req:Request, res:Response, next:NextFunction) => {
 
-  const password:any = req.body.password
+  interface userObj {
+    first_name: string,
+    last_name: string,
+    password: string,
+    email: string
+  }
+
+  const { 
+    first_name,
+    last_name,
+    password,
+    email
+  }:userObj = req.body
 
   // Hash password
   const salt = await bcrypt.genSalt(12)
@@ -29,24 +43,29 @@ export const regAuth = asyncHandler(async(req:Request, res:Response, next:NextFu
       }
     };
 
-    await jwt.sign(
-      payload,
-      key,
-      { expiresIn: exp },
-      ( error:any, token:any ) => {
-        if(error) throw error;
-        res.json({ token })
-      }
-    );
-  }
+    // await jwt.sign(
+    //   payload,
+    //   key,
+    //   { expiresIn: exp },
+    //   ( error:any, token:string,{} ) => {
+    //     if(error) throw error;
+    //     res.json({ token })
+    //   }
+    // )
 
-  else
+    const user = await knex.insert({
+      first_name: first_name,
+      last_name: last_name,
+      password: hashPass,
+      email: email
+    }).returning('*').into('users')
+
     res.status(201).json({
       'success': true,
-      'msg': 'regAuth'
+      'msg': user
     });
 
-  next()
+  }
 
 })
 
