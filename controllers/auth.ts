@@ -19,6 +19,8 @@ export const regAuth = asyncHandler(async(req:Request, res:Response, next:NextFu
     email: string
   }
 
+  type userOmit = Omit<userObj,'password'>
+
   const { 
     first_name,
     last_name,
@@ -53,7 +55,7 @@ export const regAuth = asyncHandler(async(req:Request, res:Response, next:NextFu
     //   }
     // )
 
-    const user = await knex.insert({
+    const user: userOmit = await knex.insert({
       first_name: first_name,
       last_name: last_name,
       password: hashPass,

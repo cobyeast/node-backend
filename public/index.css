@@ -1,0 +1,20 @@
+* {
+  margin: 2rem;
+  text-align: center;
+}
+
+h1 {
+  color: #444444;
+  font-size: 30px;
+}
+
+h2 {
+  color: #444444;
+  font-size: 18px;
+}
+
+p {
+  color: #444444;
+  font-size: 14px;
+  font-weight: 500;
+}

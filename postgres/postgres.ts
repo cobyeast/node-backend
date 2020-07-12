@@ -1,25 +1,26 @@
-require('dotenv').config()
+// require('dotenv').config()
 
-interface postgres {
-  connect(): any,
-  end(): any,
-  user: string,
-  password: string,
-  host: string,
-  port: number,
-  database: string,
-}
+// interface knexObj {
+//   connect(): any,
+//   end(): any,
+//   user: string,
+//   password: string,
+//   host: string,
+//   port: number,
+//   database: string,
+// }
 
-export const knex:postgres = require('knex')({
-  client: 'pg',
-  connection: () => ({
-    host: process.env.PGHOST,
-    user: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    database: process.env.PGDB,
-    charset: 'utf8'
-  })
-})
+// export const knex:knexObj = require('knex')({
+//   client: 'pg',
+//   connection: () => ({
+//     host: process.env.PGHOST,
+//     user: process.env.PGUSER,
+//     password: process.env.PGPASSWORD,
+//     database: process.env.PGDB,
+//     charset: 'utf8'
+//   })
+// })
+
 
 
 // Connect to Postgres
