@@ -1,42 +1,46 @@
-import { Request, Response, NextFunction } from 'express'
-import trimObj from '../helper'
+import { Request, Response, NextFunction } from 'express';
+import trimObj from '../helper';
 
-const knex = require('../knex/knex')
-const asyncHandler = require('../middlewares/async')
-
+const knex = require('../knex/knex');
+const asyncHandler = require('../middlewares/async');
 
 interface userObj {
-  id: number,
-  first: string,
-  last: string,
-  email: string,
-  created: string
+  id: number;
+  first: string;
+  last: string;
+  email: string;
+  created: string;
 }
 
-export const usersGet = asyncHandler(async(req:Request, res:Response, next:NextFunction) => {
+export const usersGet = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
 
-  const {id} = req.params;
+    const users: userObj = await knex.select().from('posts').where({ id });
 
-  const users: userObj = await knex.select().from('posts').where({id});
+    res.send(users);
+  }
+);
 
-  res.send(users);
+export const usersPut = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
 
-})
+    const users: userObj = await knex('users')
+      .where({ id })
+      .update(trimObj(req.body));
 
-export const usersPut = asyncHandler(async(req:Request, res:Response, next:NextFunction) => {
+    res.status(201).json(users);
+  }
+);
 
-  const {id} = req.params;
+export const usersPost = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const users: userObj = await knex
+      .insert(trimObj(req.body))
+      .returning('*')
+      .into('users');
 
-  const users: userObj = await knex('users').where({id}).update(trimObj(req.body));
-
-  res.status(201).json(users);
-
-})
-
-export const usersPost = asyncHandler(async(req:Request, res:Response, next:NextFunction) => {
-
-  const users: userObj = await knex.insert(trimObj(req.body)).returning('*').into('users');
-
-  res.status(201).json(users);
-
-})
+    res.status(201).json(users);
+  }
+);

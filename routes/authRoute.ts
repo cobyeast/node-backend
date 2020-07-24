@@ -1,21 +1,13 @@
-const express = require('express')
+const express = require('express');
 
-const {
-  regAuth,
-  logAuth
-} = require('../controllers/auth')
-
+const { regAuth, logAuth } = require('../controllers/auth');
 
 // Set Routers
-const routers = express.Router()
+const routers = express.Router();
 
-routers
-  .route('/login')
-  .post(logAuth)
+routers.route('/login').post(logAuth);
 
-routers
-  .route('/register')
-  .post(regAuth)
+routers.route('/register').post(regAuth);
 
 module.exports = routers;
 export default express;
