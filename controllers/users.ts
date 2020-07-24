@@ -35,7 +35,7 @@ export const usersPut = asyncHandler(async(req:Request, res:Response, next:NextF
 
 export const usersPost = asyncHandler(async(req:Request, res:Response, next:NextFunction) => {
 
-  const users: userObj = await knex.insert(req.body).returning('*').into('users');
+  const users: userObj = await knex.insert(trimObj(req.body)).returning('*').into('users');
 
   res.status(201).json(users);
 
