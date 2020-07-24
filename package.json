@@ -2,10 +2,10 @@
   "name": "jw_foundation",
   "version": "1.0.0",
   "description": "Backend Node API, with TypeScript, and Postgres",
-  "main": "server.ts",
+  "main": "app.ts",
   "license": "MIT",
   "scripts": {
-    "start": "if [ '$NODE_ENV' == 'production' ]; then ts-node server.ts; else nodemon server.ts; fi"
+    "start": "if [ '$NODE_ENV' == 'production' ]; then ts-node app.ts; else nodemon app.ts; fi"
   },
   "devDependencies": {
     "cors": "^2.8.5",

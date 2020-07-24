@@ -1,51 +1,42 @@
 import { Request, Response, NextFunction } from 'express'
+import trimObj from '../helper'
 
-const knex = require('../postgres/knex')
-
+const knex = require('../knex/knex')
 const asyncHandler = require('../middlewares/async')
 
 
+interface userObj {
+  id: number,
+  first: string,
+  last: string,
+  email: string,
+  created: string
+}
+
 export const usersGet = asyncHandler(async(req:Request, res:Response, next:NextFunction) => {
 
-  const {id} = req.params
+  const {id} = req.params;
 
-  const posts = await knex.select().from('posts').where({id})
-  res.send(posts)
+  const users: userObj = await knex.select().from('posts').where({id});
+
+  res.send(users);
 
 })
 
 export const usersPut = asyncHandler(async(req:Request, res:Response, next:NextFunction) => {
 
-  const { id } = req.params;
+  const {id} = req.params;
 
-  const { 
-    name,
-    text
-  } = req.body
+  const users: userObj = await knex('users').where({id}).update(trimObj(req.body));
 
-  res.status(201).json({
-    'success': true,
-    'msg': 'usersPut'
-  })
-
-  next()
+  res.status(201).json(users);
 
 })
 
 export const usersPost = asyncHandler(async(req:Request, res:Response, next:NextFunction) => {
 
-  const { 
-    name,
-    text,
-    user_id
-  } = req.body
+  const users: userObj = await knex.insert(req.body).returning('*').into('users');
 
-  const data = await knex.insert(req.body).returning('*').into('posts')
-
-  res.status(201).send(data)
-    // 'success': true,
-    // 'name': name,
-    // 'text': text,
-    // 'user_id': user_id
+  res.status(201).json(users);
 
 })
