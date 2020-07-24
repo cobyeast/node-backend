@@ -5,7 +5,7 @@ const path = require('path')
 // Load env files
 require('dotenv').config()
 
-const PORT: string | number = process.env.PORT || 8000;
+const PORT: string | number = process.env.PORT || 8001;
 
 // Security Related
 const helmet = require('helmet')
@@ -36,20 +36,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const auth = require('./routes/authRoute')
 const users = require('./routes/userRoute')
+const posts = require('./routes/postRoute')
 
 app.use('/api/auth', auth)
 app.use('/api/users', users)
+app.use('/api/posts', posts)
 
 
-const server:any = app.listen(
+const server = app.listen(
   PORT,
   () => { 
     console.log(`Server is listening in ${process.env.NODE_ENV} mode on port ${PORT}`) 
   }
 )
 
-
-const knex = require('./postgres/knex')
+const knex = require('./knex/knex')
 
 
 process.on('SIGTERM', ():void => {
@@ -61,7 +62,7 @@ process.on('SIGTERM', ():void => {
 
     console.log('http connection closed')
 
-    // End DB connection and exit server
+    // End DB connection and exit server with 0, for all is well
     knex.end()
     process.exit(0)
 

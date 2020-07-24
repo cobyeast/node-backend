@@ -1,3 +1,5 @@
+// Setting up config
+
 module.exports = {
 
   development: {

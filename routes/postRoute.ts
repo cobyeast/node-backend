@@ -2,21 +2,21 @@ const express = require('express')
 const cors = require('cors')
 
 const {
-  usersGet,
-  usersPut,
-  usersPost
-} = require('../controllers/users')
+  postsGet,
+  postsPut,
+  postsPost
+} = require('../controllers/posts')
 
 // Set Router
 const routers = express.Router()
 const cor = cors()
 
 routers.route('/:id')
-  .get(cor, usersGet)
-  .put(cor, usersPut)
+  .get(cor, postsGet)
+  .put(cor, postsPut)
 
 routers.route('')
-  .post(usersPost)
+  .post(postsPost)
 
 module.exports = routers;
 export default express;

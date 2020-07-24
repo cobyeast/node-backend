@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 
-const knex = require('../postgres/knex')
-
+const knex = require('../knex/knex')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -30,7 +29,7 @@ export const regAuth = asyncHandler(async(req:Request, res:Response, next:NextFu
 
   // Hash password
   const salt = await bcrypt.genSalt(12)
-  const hashPass = await bcrypt.hash(password, salt)
+  const hashed = await bcrypt.hash(password, salt)
 
   // JWT
   const key = process.env.GEN_KEY
@@ -38,10 +37,10 @@ export const regAuth = asyncHandler(async(req:Request, res:Response, next:NextFu
 
   if (password) {
 
-    // Change to User id
+    // Would Like to Change to Include User ID
     const payload: Object = { 
       pass: {
-        hash: hashPass
+        hash: hashed
       }
     };
 
@@ -58,7 +57,7 @@ export const regAuth = asyncHandler(async(req:Request, res:Response, next:NextFu
     const user: userOmit = await knex.insert({
       first_name: first_name,
       last_name: last_name,
-      password: hashPass,
+      password: hashed,
       email: email
     }).returning('*').into('users')
 
