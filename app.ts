@@ -1,11 +1,15 @@
 const express = require('express');
 const path = require('path');
 
+const fetch = require('node-fetch');
 const morgan = require('morgan');
+
+const { reqHeaders } = require('./middlewares/headers');
 
 // Load env file
 require('dotenv').config();
 
+// Set variables
 const PORT: string | number = process.env.PORT || 8001;
 
 // Security Related
@@ -15,6 +19,8 @@ const limit = require('express-rate-limit');
 const hpp = require('hpp');
 
 const app = express();
+
+app.use(reqHeaders);
 
 // Testing Middleware
 app.use(
@@ -28,8 +34,9 @@ app.use(helmet());
 // app.use(xss())
 
 const limiter = limit({
-  windowMs: 10 * 60 * 1000, // 10 mins
+  windowMs: 24 * 60 * 60 * 1000, // 24 hrs
   max: 100,
+  message: 'Exceeded the alotted 100 requests in your 24 hrs',
 });
 
 app.use(limiter);
