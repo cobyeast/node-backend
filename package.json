@@ -1,5 +1,5 @@
 {
-  "name": "jw_foundation",
+  "name": "share_thing",
   "version": "1.0.0",
   "description": "Backend Node API, with TypeScript, and Postgres",
   "main": "app.ts",
